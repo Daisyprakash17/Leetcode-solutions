@@ -26,10 +26,11 @@ public:
     {
         if(i>=j)
         return 0;
-        if(check(s,i,j))
-        return 0;
+       
         if(dp[i][j]!=-1)
         return dp[i][j];
+         if(check(s,i,j))
+        return 0;
         int ans=INT_MAX;
         for(int k=i+1;k<=j;k++)
         {
