@@ -17,9 +17,10 @@ public:
         if(dp[i][j]!=-1)
         return dp[i][j];
         int ans=INT_MAX;
-        for(int k=i;k<j;k++)
+        for(int k=i+1;k<=j;k++)
         {
-            int temp=findans(a,i,k)+findans(a,k+1,j)+a[i-1]*a[k]*a[j];
+            int temp=findans(a,i,k-1)+findans(a,k,j)+
+            a[i-1]*a[k-1]*a[j];
             ans=min(ans,temp);
         }
         return dp[i][j]=ans; 
