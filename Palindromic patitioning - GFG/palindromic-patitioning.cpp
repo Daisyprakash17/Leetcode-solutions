@@ -33,8 +33,18 @@ public:
         int ans=INT_MAX;
         for(int k=i+1;k<=j;k++)
         {
-            int temp=findans(s,i,k-1)+findans(s,k,j)+1;
-            ans=min(ans,temp);
+            int temp=0;
+            if(dp[i][k-1]!=-1)
+            temp+=dp[i][k-1];
+            else
+            temp+=findans(s,i,k-1);
+            
+            if(dp[k][j]!=-1)
+            temp+=dp[k][j];
+            else
+            temp+=findans(s,k,j);
+            
+            ans=min(ans,temp+1);
         }
         return dp[i][j]=ans;
     }
