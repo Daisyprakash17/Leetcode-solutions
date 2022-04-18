@@ -3,10 +3,14 @@ public:
     map<string ,int>m;
      int findans(string a,string  b )
     {  
+         // size of different then return 0
          if(a.size()!=b.size())
              return 0;
+         // if both of then are same then return 1
          if(a.compare(b)==0)
              return 1;  
+         // bellowe we are checking for similar count of the character
+         // if do not have similar count then return 0
          map<char,int>mm;
          for(auto i:a)
              mm[i]++;
@@ -15,8 +19,9 @@ public:
          for(auto i:mm)
              if(i.second>0)
                  return 0;
-         if(a.size()<=1)
-             return 0;
+         
+         
+          // checking if value is already calculated or not
             string key=a;
          key+=" ";
          key.append(b);
@@ -36,6 +41,7 @@ public:
                 flag=1;
           
          }
+         // returning the value of
          return m[key]=flag;
         
          
