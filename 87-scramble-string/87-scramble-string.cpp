@@ -38,8 +38,9 @@ public:
             int second=(findans(a.substr(0,k+1),b.substr(n-1-k,(k+1)))) && findans(a.substr(k+1,n ),b.substr(0,n-(k+1))); 
             ans=first|second;
             if(ans==1)
-                flag=1;
-          
+            { flag=1;
+             break;
+            }
          }
          // returning the value of
          return m[key]=flag;
