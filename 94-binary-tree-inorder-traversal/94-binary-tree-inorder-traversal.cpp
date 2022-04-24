@@ -12,40 +12,41 @@
 class Solution {
 public:
     vector<int> inorderTraversal(TreeNode* root) {
-         vector<int>pre,in,post;
-        stack<pair<TreeNode *,int>>st;
-        if(root)
-            st.push({root,1});
-        
-        while(st.size()>0)
+        // this solution is using morris traversal
+        vector<int>ans;
+        TreeNode * cur=root;
+        while(cur)
         {
-            auto temp=st.top().first;
-            int val=st.top().second;
-            st.pop();
-            if(val==1)
+            if(cur->left==nullptr)
             {
-                // this is for pre order
-                pre.push_back(temp->val);
-                TreeNode *t=temp->left;
-                temp->left=nullptr;
-                st.push({temp,2});
-                if(t)
-                    st.push({t,1});
+                ans.push_back(cur->val);
+                cur=cur->right;
             }
-            else if(val==2)
+            else
             {
-                // this is for in order
-                in.push_back(temp->val);
-                TreeNode *t=temp->right;
-                temp->right=nullptr;
-                st.push({temp,3});
-                if(t)
-                    st.push({t,1});
-                
+                // here we will either link the value of delink the value
+                TreeNode * pre=cur->left;
+                while(pre->right!=nullptr && pre->right!=cur)
+                {
+                    pre=pre->right;
+                }
+                if(pre->right==nullptr)
+                {
+                    // so this means we have make  link between 
+                    // righmost of left tree and cur ndoe
+                    //ans.push_back(cur->val);// pre order 
+                    pre->right=cur;// making the link
+                    cur=cur->left;
+                }
+                else 
+                {
+                    // this means there is already a link so remove it
+                    pre->right=nullptr;
+                    ans.push_back(cur->val);// inorder
+                    cur=cur->right;
+                }
             }
-            else 
-                post.push_back(temp->val);
         }
-        return in;
+        return ans;
     }
 };
