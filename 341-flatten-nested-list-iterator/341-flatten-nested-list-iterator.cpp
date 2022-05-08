@@ -21,7 +21,7 @@ public:
     vector<int>res;
     int i=0;
     
-    void makelist(vector<NestedInteger> list)
+    void makelist(vector<NestedInteger> &list)
     {
          for(auto i:list)
             if(i.isInteger())
