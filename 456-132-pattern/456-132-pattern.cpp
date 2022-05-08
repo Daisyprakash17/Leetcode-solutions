@@ -17,7 +17,7 @@ public:
             int mi=v[i-1];
             if(nums[i]>mi)
             {
-                auto it=s.upper_bound(mi);
+                auto it=s.lower_bound(mi+1);
                 if(it!=s.end() && *it<nums[i])
                     return true;
             }
