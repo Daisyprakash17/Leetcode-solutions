@@ -10,13 +10,11 @@ public:
             if(i.second==1)
                 return -1;
         else
-        {
-            int first =i.second%3;
-            int second=i.second/3;
-            if(first==0   )
-                ans+=second; 
+        { 
+            if(i.second%3==0  )
+                ans+=i.second/3; 
             else
-                ans+=second+1; 
+                ans+=i.second/3+1; 
                 
         }
         return ans;
