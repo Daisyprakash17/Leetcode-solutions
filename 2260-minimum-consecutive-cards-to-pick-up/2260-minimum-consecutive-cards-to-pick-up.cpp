@@ -9,11 +9,12 @@ public:
             int ans=INT_MAX;
         for(auto i:m)
         {
-            if(i.second.size()>1)
+            vector<int>v=i.second;
+            if(v.size()>1)
             {
-                for(int j=1;j<i.second.size();j++)
+                for(int j=1;j<v.size();j++)
                 {
-                    ans=min(ans,i.second[j]-i.second[j-1]);
+                    ans=min(ans,v[j]-v[j-1]);
                 }
             }
         }
