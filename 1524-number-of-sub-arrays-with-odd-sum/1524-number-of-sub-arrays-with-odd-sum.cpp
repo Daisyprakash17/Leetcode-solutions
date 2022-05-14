@@ -5,6 +5,7 @@ public:
             int o=0;
         int e=0;
         long long int count=0;
+        int sum=0;
         if(arr[0]%2==0)
             e++;
         else
@@ -12,10 +13,11 @@ public:
             count++;
             o++;
         }
+        sum+=arr[0];
             for(int i=1;i<arr.size();i++)
             {
-                arr[i]+=arr[i-1];
-                if(arr[i]%2==1)
+                sum+=arr[i];
+                if(sum%2==1)
                 {
                     count++;
                     count+=e;
