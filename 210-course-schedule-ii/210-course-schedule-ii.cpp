@@ -1,49 +1,70 @@
 class Solution {
 public:
-    
-    // this is topological sort using bfs (kahn's algorithms)
-    
-    
-    
-    
-    vector<int>findans(vector<int>arr[],int n)
+    void getans(vector<int>&ans,int node, vector<vector<int>>&arr,vector<int>&vis)
     {
-            vector<int>in(n,0);
-        for(int i=0;i<n;i++)
+            vis[node]=1;
+        
+        for(auto i:arr[node])
+            if(vis[i]==0)
+            getans(ans,i,arr,vis);
+        
+        ans.push_back(node);
+    }
+    bool check(int n,vector<vector<int>>&arr )
+    {
+         
+        vector<int>in(n,0);
+        
+        
+        for(int i=0;i<arr.size();i++)
+        {
+            
             for(auto j:arr[i])
                 in[j]++;
-        queue<int>q;
-        vector<int>final_ans;
+        }
+        queue<int>q; 
         for(int i=0;i<n;i++)
+        {
             if(in[i]==0)
-                q.push(i);// because these value have in degree as zero
+                q.push(i);
+        } 
+        
         int count=0;
         while(q.size()>0)
         {
-                int node=q.front();
+            auto it=q.front();
             q.pop();
-            final_ans.push_back(node);
             count++;
-            for(auto i:arr[node])
+            for(auto i:arr[it])
             {
-                
                 in[i]--;
                 if(in[i]==0)
                     q.push(i);
             }
         }
-        if(count==n)
-            return final_ans;
-        vector<int>vv;
-            return vv;
-                
+         return (n==count);
     }
     vector<int> findOrder(int n, vector<vector<int>>& v) {
-        vector<int>arr[n];
+        
+        vector<vector<int>>arr(n);
         for(auto i:v)
-            arr[i[0]].push_back(i[1]);
-        vector<int>ans=findans(arr,n);
-        reverse(ans.begin(),ans.end());
+        {
+             arr[i[0]].push_back(i[1]);
+        }
+        vector<int>ans;
+        if(!check(n,arr))
+            return ans;
+        
+        vector<int>vis(n,0);
+         for(int i=0;i<n;i++)
+        {
+            if(vis[i]==0)
+            {
+                getans(ans,i,arr,vis);
+            }
+        }
         return ans;
+        
+        
     }
 };
