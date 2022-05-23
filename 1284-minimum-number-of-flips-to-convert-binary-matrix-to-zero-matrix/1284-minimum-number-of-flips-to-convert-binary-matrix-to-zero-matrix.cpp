@@ -28,27 +28,21 @@ public:
     
     int flipornotflip(vector<vector<int>>arr,int i,int j)
     {
-        cout<<i<<" "<<j<<endl;
-        cout<<n<<" "<<m<<endl;
-        if (j==m)
+         if (j==m)
         {
-            cout<<"j is m"<<endl;
-            i++;
+             i++;
             j=0;
         }
         
         if(i==n)
         {
-            cout<<"i is n so checking for the mat"<<endl;
-         if(check(arr)==true)
+          if(check(arr)==true)
              return 0;
             else
-                return 1e6;
+                return INT_MAX-1;
         }
-        cout<<"calling for "<<i<<" "<<j+1<<endl;
-        int first=flipornotflip(arr,i,j+1);
-        cout<<"calling for "<<i<<" "<<j+1<<endl;
-        int second=flipornotflip(change(arr,i,j),i,j+1)+1;
+         int first=flipornotflip(arr,i,j+1);
+         int second=flipornotflip(change(arr,i,j),i,j+1)+1;
         return min(first,second);
     }
     
@@ -56,9 +50,8 @@ public:
         
          n=mat.size();
          m=mat[0].size();
-        cout<<n<<" "<<m<<endl;
-        int ans=flipornotflip(mat, 0,0);
-        if(ans>=1e6)
+         int ans=flipornotflip(mat, 0,0);
+        if(ans>=INT_MAX-1)
             return -1;
         else
             return ans;
