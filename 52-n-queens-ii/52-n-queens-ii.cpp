@@ -1,8 +1,6 @@
 class Solution {
 public:
-    int ans=0;// vector use to contain all the possible arrangement
-    
-    // this is function check whether the cell is safe the queen
+    int ans=0;// this is to store the total diffrent variation
     
     bool ifsafe(vector<string>&temp_grid,int i,int j,int n)
     {
@@ -46,6 +44,7 @@ public:
     {
         if(i>=n)
         {
+            // incrementing the and variable and returing the control
             ans++;
             return ;
         }
