@@ -1,42 +1,21 @@
 class Solution {
 public:
-    int dp[501][501];
-    
-    
-    int findans(string &a,string &b,int i,int j)
+    int dp[502][502];
+    int findans(string &a,string &b ,int n,int m)
     {
-             if(i==0 || j==0)
-            {
-                 
-                return  dp[i][j]=max(i,j);
-                
-            }
-        
-        if(dp[i][j]!=INT_MAX)
-        {
-             
-            return dp[i][j];
-        }
-        if(a[i-1]==b[j-1])// if both the last character are same 
-        {
-             return  dp[i][j]=findans(a,b,i-1,j-1);
-        }
-            else
-        {
-            int first=findans(a,b,i-1,j);
-            int second=findans(a,b,i,j-1); 
-              return dp[i][j]=1+min(first,second);
-        }
+        if(n==0 || m==0)
+            return 0;
+        if(dp[n][m]!=-1)
+            return dp[n][m];
+        if(a[n-1]==b[m-1])
+            return dp[n][m]=1+findans(a,b,n-1,m-1);
+        else
+            return dp[n][m]=max(findans(a,b,n-1,m),findans(a,b,n,m-1));
     }
-    int minDistance(string a, string b) { 
-        for(int i=0;i<501;i++)
-        {
-            for(int j=0;j<501;j++)
-                dp[i][j]=INT_MAX;
-        }
-        int n=a.size();
-        int m=b.size();
-        findans(a,b,n,m);
-        return dp[n][m];
+    int minDistance(string a, string b) {
+    
+        memset(dp,-1,sizeof(dp));
+        int val=findans(a,b,a.size(),b.size());
+         return a.size()-val+(b.size()-val);
     }
 };
