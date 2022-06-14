@@ -24,9 +24,8 @@ public:
             else
         {
             int first=findans(a,b,i-1,j);
-            int second=findans(a,b,i,j-1);
-            int third=findans(a,b,i-1,j-1);
-              return dp[i][j]=min(1+first,min(1+second,2+third));
+            int second=findans(a,b,i,j-1); 
+              return dp[i][j]=1+min(first,second);
         }
     }
     int minDistance(string a, string b) { 
