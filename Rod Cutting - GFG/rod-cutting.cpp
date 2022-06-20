@@ -10,30 +10,30 @@ using namespace std;
 
 class Solution{
   public:
-    int dp[1001][1001];
-    int findans(int price[],int n,int l)
-    {
-        if(l==0 || n==0)
-        return 0;
-        
-        if(dp[l][n]!=-1)
-        return dp[l][n];
-    if(n<=l)
-    {
-    return dp[l][n] =max(price[n-1]+findans(price,n,l-n),findans(price,n-1,l));
-    }
-    else
-    {
-        return dp[l][n]=findans(price,n-1,l);
-    }
-    }
+     
     int cutRod(int price[], int n) {
-        //code here
-        
-        memset(dp,-1,sizeof(dp));
-        
-    findans(price,n,n);
-    return dp[n][n];
+      
+      int dp[1001][1001];
+      
+      for(int i=0;i<=n;i++)
+      {
+          for(int j=0;j<=n;j++)
+          if(i==0 || j==0)
+          dp[i][j]=0;
+          
+      }
+     for(int i=1;i<=n;i++)
+            for(int j=1;j<=n;j++)
+            {
+                if(i<=j)
+                {
+                    dp[i][j]=max(price[i-1]+dp[i][j-i],dp[i-1][j]);
+                }
+                else
+                dp[i][j]=dp[i-1][j];
+                
+            }
+      return dp[n][n];
     }
 };
 
