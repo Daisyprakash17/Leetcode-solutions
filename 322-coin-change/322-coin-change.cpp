@@ -18,6 +18,7 @@ public:
             
     }
     int coinChange(vector<int>& coins, int amount) {
+        sort(coins.begin(),coins.end());
         if(amount==0)
             return 0;
         memset(dp,-1,sizeof(dp));
