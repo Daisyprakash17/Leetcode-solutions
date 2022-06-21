@@ -3,8 +3,7 @@ public:
     
     int findans(vector<int>&v,vector<int>&dp,int n)
     {
-        cout<<n<<endl;
-        if(n<=0)
+         if(n<=0)
             return 0;
         if(dp[n-1]!=-1)
             return dp[n-1];
