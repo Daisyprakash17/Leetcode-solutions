@@ -28,10 +28,8 @@ public:
                 return false;
             q.pop();
             
-             long long oval=val%bsum;
-            cout<<"o val is "<<oval<<endl;
-            sum=bsum+oval;
-            cout<<"ths sum si "<<sum<<endl;
+             long long oval=val%bsum; 
+            sum=bsum+oval; 
             
             
             if(oval)
