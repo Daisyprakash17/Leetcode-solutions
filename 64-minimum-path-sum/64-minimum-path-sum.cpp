@@ -10,8 +10,7 @@ public:
         {
             for(int j=m-1;j>=0;j--)
             {
-                cout<<i<<" "<<j<<endl;
-                if(i+1<n && temp[i][j]>temp[i+1][j]+v[i][j])
+                 if(i+1<n && temp[i][j]>temp[i+1][j]+v[i][j])
                     temp[i][j]=temp[i+1][j]+v[i][j];
                     
                 if(j+1<m && temp[i][j]>temp[i][j+1]+v[i][j])
