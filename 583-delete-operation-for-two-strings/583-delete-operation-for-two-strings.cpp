@@ -1,6 +1,6 @@
 class Solution {
 public:
-    	int dp[1001][1001];
+    	int dp[502][502];
 	   int findans(string &a,string &b,int n,int m)
 	   {
 	       if(n==0 || m==0)
