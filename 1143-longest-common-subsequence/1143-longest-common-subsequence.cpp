@@ -1,5 +1,6 @@
 class Solution {
 public:
+    // this is the code to print the longest commmon sub-sequence and also retunrning the length
     int dp[1001][1001];
     int findans(string &a,string &b,int n,int m)
     {
@@ -17,28 +18,32 @@ public:
     }
     int longestCommonSubsequence(string a, string b) {
         int n=a.size();
-        int m=b.size();  
-        int dp[n+1][m+1];
-        for(int i=0;i<=n;i++)
-        {
-            for(int j=0;j<=m;j++)
-                if(i==0 || j==0)
-                    dp[i][j]=0;
-            
-            
-        }
+        int m=b.size(); 
+        memset(dp,-1,sizeof(dp));
+         int ans= findans( a,b,n,m);
         
-        for(int i=1;i<n+1;i++)
+        string temp;
+        int i=n;
+        int j=m;
+        while(i>0 && j>0)
         {
-            for(int j=1;j<m+1;j++) 
-                if(a[i-1]==b[j-1])
-                    dp[i][j]=1+dp[i-1][j-1];
+            if(a[i-1]==b[j-1])
+            {
+                temp+=a[i-1];
+                i--;
+                j--;
+            }
             else
-                dp[i][j]=max(dp[i][j-1],dp[i-1][j]);
-            
-            
+            {
+                if(dp[i-1][j]>=dp[i][j-1])
+                    i--;
+                else
+                    j--;
+            }
         }
-        return dp[n][m];
-        
+        reverse(temp.begin(),temp.end());
+        cout<<temp<<endl;
+        return ans;
+    
     }
 };
