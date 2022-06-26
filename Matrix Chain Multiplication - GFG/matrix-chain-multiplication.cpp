@@ -10,27 +10,25 @@ using namespace std;
 class Solution{
 public:
     int dp[101][101];
-    int findans(int *a ,int i,int j)
+    int findans(int arr[],int i,int j)
     {
         if(i>=j)
         return 0;
-        if(dp[i][j]!=-1)
-        return dp[i][j];
+            if(dp[i][j]!=-1)
+            return dp[i][j];
         int ans=INT_MAX;
-        for(int k=i+1;k<=j;k++)
+        for(int k=i;k<j;k++)
         {
-            int temp=findans(a,i,k-1)+findans(a,k,j)+
-            a[i-1]*a[k-1]*a[j];
-            ans=min(ans,temp);
+            int tempans=findans(arr,i,k)+findans(arr,k+1,j)+arr[i-1]*arr[k]*arr[j];
+            ans=min(ans,tempans);
         }
-        return dp[i][j]=ans; 
+        return dp[i][j]= ans;
     }
-    int matrixMultiplication(int N, int arr[])
+    int matrixMultiplication(int n, int arr[])
     {
         // code here
         memset(dp,-1,sizeof(dp));
-        return findans(arr,1,N-1);
-        
+        return findans(arr,1,n-1);
     }
 };
 
