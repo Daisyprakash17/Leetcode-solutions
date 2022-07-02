@@ -9,9 +9,7 @@ public:
     vector<vector<int>> reconstructQueue(vector<vector<int>>& v) {
         sort(v.begin(),v.end(),cmp);
         
-        vector<vector<int>>ans; 
-        for(auto i :v)
-            cout<<i[0]<<" "<<i[1]<<endl;
+        vector<vector<int>>ans;  
         
         for(int i=0;i<v.size();i++)
         {
@@ -33,8 +31,7 @@ public:
                     break;
                 }
                 j++;
-            }
-            cout<<(j-ans.begin())<<endl;
+            } 
             ans.insert(j,temp);
         }
         return ans;
