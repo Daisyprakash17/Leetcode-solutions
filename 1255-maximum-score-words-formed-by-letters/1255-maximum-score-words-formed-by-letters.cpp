@@ -4,7 +4,7 @@ public:
     vector<string>w;
     map<char,int>l;
     vector<int>s;
-    void findans(vector<int>val,int k,int n)
+    void findans(vector<int>&val,int k,int n)
     {
         if(k>=n)
         {  
@@ -29,8 +29,9 @@ public:
            ans=max(ans,sum); 
             return ;
         }
-        findans(val,k+1,n);
         val[k]=1;
+        findans(val,k+1,n);
+        val[k]=0; 
         findans(val,k+1,n);
     }
     int maxScoreWords(vector<string>& words, vector<char>& letters, vector<int>& score) {
