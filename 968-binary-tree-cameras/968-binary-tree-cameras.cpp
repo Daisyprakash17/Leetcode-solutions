@@ -1,34 +1,43 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
 class Solution {
-  map<pair<TreeNode*, int>, int> dp;
-  int vcover(TreeNode* root, bool pvisited, bool force) {
-    if (root==NULL)
-      return force ? INT_MAX : 0;
-    pair<TreeNode*, int> state = make_pair(root,pvisited * 2 +force);
-    if (dp.find(state) != dp.end()) 
-      return dp[state];
-    
-    int incl=vcover(root->left, true, false)+vcover(root->right, true, false) + 1;
-    if (force) {
-      dp[state]=incl;
-      return incl;
-    }
-    
-    int excl=INT_MAX;
-    if (pvisited)
-      excl=vcover(root->left, false, false)+vcover(root->right, false, false);
-    else {
-      if (root->left)
-        excl=min(excl,vcover(root->left, false, true) +vcover(root->right, false, false));
-      if (root->right)
-        excl=min(excl,vcover(root->left, false, false) +vcover(root->right, false, true));
-    }
-    int result=min(incl, excl);
-    dp[state]=result;
-    return result;
-  }
-  
 public:
-  int minCameraCover(TreeNode* root) {
-    return vcover(root, false, false);
-  }
+    int ans=0;
+    // camera 1
+    // need cover -1
+    // covered 2
+    int findans(TreeNode *root)
+    {
+         if(root==nullptr)
+             return 2;
+        int left=findans(root->left);
+        int right=findans(root->right);
+        
+        if(left==-1 || right==-1)
+        {
+            ans++;
+            return 1;
+        }
+        else if(left==2 && right==2)
+            return -1;
+        else
+            return 2;
+            
+            
+        
+    }
+    int minCameraCover(TreeNode* root) {
+       if(findans(root)==-1)
+           ans++;
+        return ans;
+    }
 };
