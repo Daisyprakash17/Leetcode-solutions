@@ -4,22 +4,33 @@ public:
     int findans(vector<vector<int>>&v,int node,string &s)
     {
         vector<int>vals;
+         priority_queue<int,vector<int>,greater<int>>q;
         for(auto i:v[node])
         {
             int val=findans(v,i,s);
             if(s[node]!=s[i])
-                vals.push_back(val);
-        }
-        sort(vals.rbegin(),vals.rend());
-        if(vals.size()>1)
+            {
+                q.push(val);
+                if(q.size()>2)
+                    q.pop();
+            }
+        } 
+        
+        if(q.size()==2)
         {
-            ans=max(ans,vals[0]+vals[1]+1);
-            return 1+max(vals[0],vals[1]);
+            int first=q.top();
+            q.pop();
+            int second=q.top();
+            q.pop();
+            ans=max(ans,first+second+1);
+            return 1+max(first,second);
         }
-        else if(vals.size()==1)
+        else if(q.size()==1)
         {
-            ans=max(ans,1+vals[0]);
-            return 1+vals[0];
+            int first=q.top();
+            q.pop();
+            ans=max(ans,1+first);
+            return 1+first;
         }
         else
             return 1;
