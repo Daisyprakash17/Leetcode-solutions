@@ -23,7 +23,7 @@ public:
         return dp[i][j]=res;
             
     }
-    void getans(vector<string>temp,int i,string& s)
+    void getans(vector<string>&temp,int i,string& s)
     {
         if(i==s.size())
         {
@@ -33,10 +33,12 @@ public:
         
         for(auto l:m[i])
         {
-            vector<string >t=temp;
-            t.push_back(s.substr(i,l)); 
-            getans(t,i+l,s);
-             
+            string ss=s.substr(i,l);
+            temp.push_back(ss);
+            getans(temp,i+l,s);
+            auto it=temp.end();
+            it--;
+            temp.erase(it);
         }    
     }
     vector<vector<string>> partition(string s) {
