@@ -33,12 +33,10 @@ public:
         
         for(auto l:m[i])
         {
-            string ss=s.substr(i,l);
-            temp.push_back(ss);
-            getans(temp,i+l,s);
-            auto it=temp.end();
-            it--;
-            temp.erase(it);
+            vector<string >t=temp;
+            t.push_back(s.substr(i,l)); 
+            getans(t,i+l,s);
+             
         }    
     }
     vector<vector<string>> partition(string s) {
