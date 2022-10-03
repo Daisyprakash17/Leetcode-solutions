@@ -1,28 +1,32 @@
 class Solution {
 public:
-    int dp[50][50][51];
-    int mod=1000000007;
-    int findans(int i,int j,int moves,int r,int c)
+    int dp[51][51][51];
+    int n,m;
+    int findans(int i,int j,int move)
     {
-        if(i<0 || i>=r || j<0 || j>=c)
+        if(i<0 || j<0 || i==n || j==m)
+        {
+            
             return 1;
-        if(moves==0)
+        }
+        if(move==0)
             return 0;
-        
-        if(dp[i][j][moves]!=-1)
-            return dp[i][j][moves];
+        if(dp[i][j][move]!=-1)
+            return dp[i][j][move];
         
         int val=0;
-        val=(val+findans(i-1,j,moves-1,r,c))%mod;
-        val=(val+findans(i+1,j,moves-1,r,c))%mod;
-        val=(val+findans(i,j-1,moves-1,r,c))%mod;
-        val=(val+findans(i,j+1,moves-1,r,c))%mod;
-        return dp[i][j][moves]=val;
-            
+        val=(val+findans(i+1,j,move-1))%1000000007;
+        val=(val+findans(i,j+1,move-1))%1000000007;
+        val=(val+findans(i,j-1,move-1))%1000000007;
+        val=(val+findans(i-1,j,move-1))%1000000007;
+        return dp[i][j][move]=val;
     }
-    int findPaths(int m, int n, int moves, int r, int c) {
+    
+    int findPaths(int row , int col, int maxMove, int i, int j) {
         memset(dp,-1,sizeof(dp));
+        n=row;
+        m=col;
+        return findans(i,j,maxMove);
         
-        return findans(r,c,moves,m,n);
     }
 };
