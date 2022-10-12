@@ -1,40 +1,18 @@
 class Solution {
 public:
-    map<int,vector<int>>m;
-    vector<vector<string>>ans;
-    void findans(string &s,int in)
+    vector<vector<string >>ans;
+    bool check(int i,int j,string &s)
     {
-        if(in>=s.size())
-            return ;
-        
-        if(m[in].size()>0)
-            return ;
-        
-        for(int j=in;j<s.size();j++)
+        while(i<=j)
         {
-            int i=in;
-            int k=j;
-            int flag=1;
-            while(i<=k)
-            {
-                if(s[i]!=s[k])
-                {
-                    flag=0;
-                    break;
-                }
-                i++;
-                k--;
-            }
-            if(flag)
-            {
-                m[in].push_back((j-in)+1);
-                findans(s,j+1);
-            }
+            if(s[i]!=s[j])
+                return false;
+            i++;
+            j--;
         }
-        
-        
+        return true;
     }
-    void getans(int i,string &s,vector<string >temp)
+    void findans(int i,string &s,vector<string >&temp)
     {
         if(i>=s.size())
         {
@@ -42,20 +20,20 @@ public:
             return ;
         }
         
-        for(auto j:m[i])
+        for(int j=i;j<s.size();j++)
         {
-            vector<string >tt;
-            tt=temp;
-            string ss=s.substr(i,j);
-            tt.push_back(ss);
-            getans(i+j,s,tt);
-            
+            if(check(i,j,s))
+            {
+                string ss=s.substr(i,j-i+1);
+                temp.push_back(ss);
+                findans(j+1,s,temp);
+                temp.pop_back();
+            }
         }
     }
     vector<vector<string>> partition(string s) {
-        findans(s,0);   
         vector<string >temp;
-        getans(0,s,temp);
+        findans(0,s,temp);
         return ans;
     }
 };
