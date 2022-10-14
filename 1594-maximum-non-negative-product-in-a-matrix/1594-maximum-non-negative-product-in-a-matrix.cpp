@@ -50,12 +50,7 @@ public:
             }
         }
         long long  res=val[0][0].second;
-        for(auto i:val)
-        {
-            for(auto j:i)
-                cout<<j.first<<" "<<j.second<<" ## ";
-            cout<<endl;
-        }
+       
             if(res>=0)
                 return res%mod;
         return -1;
