@@ -10,8 +10,7 @@ public:
          if(k==0)
             return 1.0;
         
-         cout<<to_string(dp[i][j][k])<<endl;
-        if(to_string(dp[i][j][k])!="-nan")
+         if(to_string(dp[i][j][k])!="-nan")
             return dp[i][j][k];
         
           double total=0.0;
