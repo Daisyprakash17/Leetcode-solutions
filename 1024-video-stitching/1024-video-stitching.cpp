@@ -33,11 +33,9 @@ public:
             val=-1;
         return dp[cur][pre]=val;
     }
-    int videoStitching(vector<vector<int>>& clips, int time) {
-       vector<vector<int>>v;
-        v.push_back({0,0});
-        for(auto i:clips)
-            v.push_back(i);
+    int videoStitching(vector<vector<int>>& v, int time) {
+       
+        v.push_back({0,0}); 
         sort(v.begin(),v.end());
         
         memset(dp,-1,sizeof(dp));
