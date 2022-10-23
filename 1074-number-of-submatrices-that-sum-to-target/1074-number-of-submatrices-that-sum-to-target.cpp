@@ -11,12 +11,13 @@ public:
         }
         
         int ans=0;
+          unordered_map<int,int>mm;
         for(int start=0;start<m;start++)
         {
             for(int last=start;last<m;last++)
             {
                 
-                map<int,int>mm;
+              
                 int sum=0;
                 mm[0]=1;
                     
@@ -26,6 +27,7 @@ public:
                     ans+=mm[sum-target];
                     mm[sum]++;
                 }
+                mm.clear();
             }
         }
         return ans;
