@@ -19,21 +19,17 @@ public:
                 count++;
             }
             else
-            {
-                last=v[i];
+            {  
+                count=1;
+            }
+            
                 if(count>1)
                     {
-                    ans+=(count*(count+1)/2)-count;
-                    count=1;
+                     ans+=count-1;
                 }
-            }
         }
         
-                if(count>1)
-                    {
-                    ans+=(count*(count+1)/2)-count;
-                    count=1;
-                }
+              
         return ans;
     }
     
