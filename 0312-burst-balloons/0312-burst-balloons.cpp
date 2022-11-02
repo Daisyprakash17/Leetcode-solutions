@@ -1,5 +1,9 @@
 class Solution {
 public:
+    // so in this we actual not removed the values
+    // but we have added the valeus between 1 _ _ _ _ _ 1
+    // and on each adding we take the sum of product of
+    // left *curelement* right
     int dp[302][302];
     
     int findans(vector<int>&v,int i,int j)
