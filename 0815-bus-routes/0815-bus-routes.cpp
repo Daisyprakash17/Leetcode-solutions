@@ -14,8 +14,7 @@ public:
         queue<pair<int,int>>q;
         for(auto i:m[s])
         { 
-            q.push({i,1});
-            cout<<i<<" "<<1<<endl;
+            q.push({i,1}); 
             dis[i]=1;
         } 
         while(q.size()>0)
@@ -39,10 +38,7 @@ public:
                 }
             }
         }
-        int ans=INT_MAX;
-        for(auto i:dis)
-            cout<<i<<" ";
-        cout<<endl;
+        int ans=INT_MAX; 
         for(auto i:m[t])
         {
             ans=min(ans,dis[i]);
