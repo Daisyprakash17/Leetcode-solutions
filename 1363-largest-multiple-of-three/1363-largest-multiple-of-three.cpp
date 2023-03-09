@@ -3,24 +3,12 @@ public:
     
     string findans(vector<int>&a,vector<int>&b,int n,int m)
     {
-        string temp;
-        for(int i=0;i<n;i++)
-            cout<<a[i]<<" ";
-        cout<<endl;
-        for(int i=0;i<m;i++)
-            cout<<b[i]<<" ";
-        cout<<endl;
+        string temp; 
         if(n>m)
         {
             swap(n,m);
             a.swap(b);
-        }
-        for(int i=0;i<n;i++)
-            cout<<a[i]<<" ";
-        cout<<endl;
-        for(int i=0;i<m;i++)
-            cout<<b[i]<<" ";
-        cout<<endl;
+        } 
         if((n<=1) && m==3) 
             temp=to_string(b[0]*100+b[1]*10+b[2]); 
         else if(n==1 && m==2)
@@ -56,15 +44,13 @@ public:
                 one.push_back(i);
             else
                 two.push_back(i);
-        }   
-        cout<<one.size()<<" "<<two.size()<<endl;
+        }    
         int n=one.size()%3;
         if(one.size()%3==0 && one.size()!=0)
              n=3; 
         int m=two.size()%3;
         if(two.size()%3==0 && two.size()!=0)
-            m=3; 
-        cout<<"n and m is "<<n<<" "<<m<<endl;
+            m=3;  
         
         int i=n,j=m;
           while(n<one.size() || m<two.size())
