@@ -11,21 +11,14 @@ public:
         } 
         if((n<=1) && m==3) 
             temp=to_string(b[0]*100+b[1]*10+b[2]); 
-        else if(n==1 && m==2)
-        {
-             
-            if(a[0]>b[1])
-                temp=to_string(a[0]*10+b[1]);
-            else
-                temp=to_string(b[1]*10+a[0]); 
-        }
         else
         {
-            int i=0;int j=0;
-            while(i<n && j<m)
+            n--;
+            m--;
+            while(n>=0 && m>=0)
             {
-                temp+=to_string(a[i++]);
-                temp+=to_string(b[j++]);
+                temp+=to_string(a[n--]);
+                temp+=to_string(b[m--]);  
             }
         }
         return temp;
