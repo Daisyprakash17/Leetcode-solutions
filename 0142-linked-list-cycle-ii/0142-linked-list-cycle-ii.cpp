@@ -8,21 +8,29 @@
  */
 class Solution {
 public:
-    ListNode * findans(ListNode * head)
-    {
-        if(head==NULL)
-            return head;
-        int val=head->val;
-        head->val=100001;
-        ListNode * temp;
-        if((!head->next) || (head->next && head->next->val==100001) ) 
-            temp=head->next; 
-        else 
-            temp=findans(head->next);   
-        head->val=val;
-        return temp;
-    }
+   
     ListNode *detectCycle(ListNode *head) {
-        return findans(head);
+        
+        if(head==nullptr || head->next==nullptr)
+            return NULL;
+        ListNode * slow,*fast,*entry;
+        slow=head;
+        fast=head;
+        entry=head;
+        while(fast->next && fast->next->next)
+        {
+            slow=slow->next;
+            fast=fast->next->next;
+            if(slow==fast)
+            {
+                while(entry!=slow)
+                {
+                    entry=entry->next;
+                    slow=slow->next;
+                }
+                return entry;
+            }
+        }
+        return NULL;
     }
 };
