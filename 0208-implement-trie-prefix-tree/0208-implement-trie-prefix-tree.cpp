@@ -1,54 +1,43 @@
- struct Node{
-     Node *links[26];
-     bool flag=false;
-     bool containkey(char ch) {
-         return (links[ch-'a']!=NULL);
-         // return true if there is the value
-         // and will return false if it is not there
-     }
-     void putkey(char ch,Node * node){
-         links[ch-'a']=node;
-     }
-
-     Node* getnode(char ch){
-         return links[ch-'a'];
-     } 
- };
+struct Node {
+   Node *links[26];
+    bool flag=false;
+    bool containNode(char ch)
+    {
+        return links[ch-'a']!=NULL;
+    }
+    void putNode(char ch,Node * node){
+        links[ch-'a']=node;
+    }
+    Node * getNode(char ch){
+        return links[ch-'a'];
+    }
+};
 class Trie {
-    private :
-    Node * root;
 public:
+    Node * root;
     Trie() {
         root=new Node();
     }
     
     void insert(string word) {
-        Node * node =root;
+       Node * node=root;
         for(auto i:word)
         {
-            if(node->containkey(i)==false)
-            {
-                // if new node is not there 
-                // then we will create a new node
-                // and will put the current char in current node 
-                // and will point the link to the new node with flag false
+            if(!node->containNode(i))
+                node->putNode(i,new Node());
+            node=node->getNode(i);
                 
-                node->putkey(i,new Node());
-            }
-            node=node->getnode(i);
-            
         }
         node->flag=true;
     }
     
     bool search(string word) {
         Node * node=root;
-        
         for(auto i:word)
         {
-            if(node->containkey(i)==false)
+            if(node->containNode(i)==false)
                 return false;
-            node=node->getnode(i);
+            node=node->getNode(i);
         }
         return node->flag;
     }
@@ -57,10 +46,9 @@ public:
         Node * node=root;
         for(auto i:prefix)
         {
-            if(node->containkey(i)==false)
+            if(node->containNode(i)==false)
                 return false;
-            node=node->getnode(i);
-            
+            node=node->getNode(i);
         }
         return true;
     }
