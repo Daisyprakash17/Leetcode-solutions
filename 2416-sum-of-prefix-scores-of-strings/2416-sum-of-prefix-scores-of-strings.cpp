@@ -1,66 +1,48 @@
-    struct Node {
-      Node * links[26];
-        int flag=false;
-        int count=0;
-        bool checkval(char ch)
-        {
-            return (links[ch-'a']!=NULL);
-        }
-        void insertval(char ch,Node * node)
-        {
-            links[ch-'a']=node;
-        }
-        Node * getnode(char ch)
-        {
-            return links[ch-'a'];
-        }
-    };
+struct Node{
+  Node * links[26];
+    int count=0;
+    bool  containNode(char ch){
+        return links[ch-'a']!=NULL;
+    }
+    void putNode(char ch,Node * node){
+        links[ch-'a']=node;
+    }
+    Node * getNode(char ch){
+        return links[ch-'a'];
+    }
+};
 class Solution {
 public:
-    Node * root;
-    
-    void insertstring(string  &s)
+    Node *root;
+    void insertString(string &s)
     {
         Node * node=root;
-        
         for(auto i:s)
         {
-            if(node->checkval(i)==false)
-            {
-                node->insertval(i,new Node());
-            }
-            node=node->getnode(i);
+            if(node->containNode(i)==false)
+                node->putNode(i,new Node());
+            node=node->getNode(i);
             node->count++;
         }
-        
     }
-    int getans(string &s)
+    int getVal(string & s)
     {
         Node * node=root;
-        int ans=0;
+        int count=0;
         for(auto i:s)
         {
-            if(node->checkval(i)==false)
-                return 0;
-            node=node->getnode(i);
-            ans+=node->count;
-        } 
-        return ans;
+            node=node->getNode(i);
+            count+=node->count;
+        }
+        return count;
     }
     vector<int> sumPrefixScores(vector<string>& words) {
-     root=new Node ();
-        
+            root=new Node();
         for(auto i:words)
-        {
-            insertstring(i);
-        }
+            insertString(i);
         vector<int>ans;
         for(auto i:words)
-        {
-            int temp=getans(i);
-            ans.push_back(temp);    
-        }
+            ans.push_back(getVal(i));
         return ans;
-        
     }
 };
