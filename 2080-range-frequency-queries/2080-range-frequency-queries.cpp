@@ -37,13 +37,7 @@ public:
             i.clear();
         n=arr.size();
         build(1,0,arr.size()-1,arr); 
-        for(int i=1;i<14;i++)
-        {
-            cout<<"the value of tree node "<<i<<endl;
-            for(auto j:tree[i])
-                cout<<j.first<<" "<<j.second<<endl;
-            cout<<endl;
-        }
+        
     }
     
     int query(int left, int right, int value) {
