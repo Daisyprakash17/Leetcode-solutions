@@ -1,30 +1,37 @@
 class Solution {
 public:
     int dp[71][71][71];
-    int findans(vector<vector<int>>&v,int n,int m,int row,int first,int second)
+    int findans(int row,int i,int j,vector<vector<int>>&v)
     {
-        if(  first<0 || first>=m || second<0|| second>=m || first>=second)
-            return 0;
-        if(row==n-1)
-            return v[row][first]+v[row][second];
-         if(dp[row][first][second]!=-1)
-            return dp[row][first][second];
         
-        int ans=v[row][first]+v[row][second];
+        if(row>=v.size())
+            return 0;
+        if(i<0 || j<0 || i>=v[0].size() || j>=v[0].size())
+            return -1;
+        if(dp[row][i][j]!=-1)
+            return dp[row][i][j];
+        
         int val=0;
-        for(int i=-1;i<2;i++)
-        {
-            for(int j=-1;j<2;j++)
+        
+        for(int a=-1;a<=1;a++)
+            for(int b=-1;b<=1;b++)
             {
-                val=max(val,findans(v,n,m,row+1,first+i,second+j));
+                int temp=findans(row+1,i+a,j+b,v); 
+                if(temp!=-1)
+                    val=max(val,temp);
             }
-        }
-        return dp[row][first][second]=ans+val;
+        
+        
+            val+=v[row][i]+v[row][j];
+        if(i==j)
+            val-=v[row][i];
+        
+        return dp[row][i][j]=val;
     }
     int cherryPickup(vector<vector<int>>& v) {
-     memset(dp,-1,sizeof(dp));
+        memset(dp,-1,sizeof(dp));
         int n=v.size();
         int m=v[0].size();
-        return findans(v,n,m,0,0,m-1);
+        return findans(0,0,m-1,v);
     }
 };
