@@ -1,37 +1,35 @@
 class Solution {
 public:
-    int dp[10001][201];
-    
-    int findans(vector<int>&v,int sum,int n)
+     int dp[10001][201];
+    int findans(int i,int n,int sum,vector<int>&v)
     {
-        if(sum==0)
-            return true;
-        if(n<0)
-            return false;
-        
-        if(dp[sum][n]!=-1)
-            return dp[sum][n];
-        
-        if(v[n]<=sum)
+        if(i>=n)
         {
-           return  dp[sum][n]=findans(v,sum-v[n],n-1)|findans(v,sum,n-1);
-            
+            if(sum==0)
+                return true;
+            else
+                return false;
         }
         
-        else
-            return dp[sum][n]=findans(v,sum,n-1);
-    }
-    
+        if(dp[sum][i]!=-1)
+            return dp[sum][i];
+        
+        int ans=0;
+        if(sum>=v[i])
+            ans=ans||findans(i+1,n,sum-v[i],v);
+        ans=ans||findans(i+1,n,sum,v);
+        return dp[sum][i]=ans;
+            
+            
+        }
     bool canPartition(vector<int>& nums) {
         int sum=0;
+        memset(dp,-1,sizeof(dp));
         for(auto i:nums)
             sum+=i;
         
         if(sum%2==1)
             return false;
-        
-        sum=sum/2;
-        memset(dp,-1,sizeof(dp));
-        return findans(nums,sum,nums.size()-1);
+        return findans(0,nums.size(),sum/2,nums);
     }
 };
