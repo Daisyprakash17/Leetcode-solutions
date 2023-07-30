@@ -61,11 +61,7 @@ public:
         string ans=""; 
         ans+=v[0]; 
         add(ans,v[1]);
-        add(ans,v[2]);
-         for(auto i:v)
-             cout<<i<<" ";
-         cout<<endl;
-         cout<<"the ans is "<<ans<<endl;
+        add(ans,v[2]); 
         return {ans.size(),ans};
      }
     string minimumString(string a, string b, string c) {
