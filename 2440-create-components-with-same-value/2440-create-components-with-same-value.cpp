@@ -41,23 +41,17 @@ public:
         int ans=0;
         int count=0;
         findans(v,vis,count,0,6,nums);
-        cout<<count<<endl;
-        for(int i=1;i<=sqrt(sum);i++)
+         for(int i=1;i<=sqrt(sum);i++)
         {
             if(sum%i==0)
-            {
-                
-                cout<<i<<" "<<sum/i<<endl;
-                count=0; 
-                
+            { 
+                 count=0;  
                 if(findans(v,vis,count,0,i,nums)==0)
                     ans=max(ans,count-1);
-                cout<<"callled for sum "<<i<<" "<<count<<endl;
-                count=0;
+                 count=0;
                 if(findans(v,vis,count,0,sum/i,nums)==0)
                     ans=max(ans,count-1);
-                cout<<"callled for sum "<<sum/i<<" "<<count<<endl;
-            }
+             }
         }
         return ans;
         
