@@ -1,28 +1,29 @@
 class Solution {
 public:
-    int dp[1001][1001];
-    int findans(vector<vector<int>>&v,int n,int pre)
+    int dp[1000];
+    int findans(vector<vector<int>>&p,int i)
     {
-        if(n<0)
+        if(i==p.size())
             return 0;
-        if(pre!=-1 && dp[n][pre]!=-1)
-            return dp[n][pre];
-            int res;
-        if(pre==-1 || v[n][1]<v[pre][0])
-        {
-           res =max(findans(v,n-1,pre),1+findans(v,n-1,n));
-        }
-        else
-            res= dp[n][pre]=findans(v,n-1,pre);
-        if(pre==-1)
-            return res;
-        else 
-            return dp[n][pre]=res;
-    }
-    int findLongestChain(vector<vector<int>>& v) {
-        sort(v.begin(),v.end());
-        memset(dp,-1,sizeof(dp));
+        if(dp[i]!=-1)
+            return dp[i];
         
-        return findans(v,v.size()-1,-1);
+        int ans=1;
+        for(int j=i+1;j<p.size();j++)
+        {
+            if(p[i][1]<p[j][0])
+                ans=max(ans,1+findans(p,j));
+        }
+        return dp[i]=ans;
+    }
+    int findLongestChain(vector<vector<int>>& pairs) {
+        sort(pairs.begin(),pairs.end());
+        memset(dp,-1,sizeof(dp));
+        int ans=0;
+        for(int i=0;i<pairs.size();i++)
+        {
+            ans=max(ans,findans(pairs,i));
+        }
+        return ans;
     }
 };
