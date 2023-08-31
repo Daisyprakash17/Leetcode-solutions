@@ -67,8 +67,7 @@ public:
           makedsu(n);
         for(auto i:v[3])
             unionbyr(i.first,i.second);
-        int second=getres(v[2],n);
-        cout<<first<<" "<<second<<endl;
+        int second=getres(v[2],n); 
         if(first!=-1 && second!=-1)
             return first+second+count;
         return -1;
