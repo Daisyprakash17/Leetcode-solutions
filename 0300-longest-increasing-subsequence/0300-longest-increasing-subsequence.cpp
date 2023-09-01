@@ -1,26 +1,29 @@
 class Solution {
 public:
-    int dp[2501];
-    int findans(vector<int>&v,int i)
-    {
-        if(i==v.size())
-            return 0;
-        if(dp[i]!=-1)
-            return dp[i];
-        int res=1;
-        for(int j=i+1;j<v.size();j++)
-        {
-            if(v[j]>v[i])
-                res=max(res,1+findans(v,j));
+    int lengthOfLIS(vector<int>& v) {
+        vector<int>temp;
+        int ans=1;
+        temp.push_back(v[0]);
+        vector<int>res(v.size(),0);
+        res[0]=1;
+        for(int i=1;i<v.size();i++){
+            if(v[i]>temp.back())
+            {
+                temp.push_back(v[i]);
+                ans=temp.size();
+                res[i]=ans;
+            }
+            else
+            { 
+                auto it=lower_bound(temp.begin(),temp.end(),v[i]);
+                int ind=it-temp.begin();
+                temp[ind]=v[i]; 
+                ans=max(ans,ind+1); 
+                res[i]=ind+1;
+            }
         }
-        return dp[i]=res;
-    }
-    int lengthOfLIS(vector<int>& nums) {
-        memset(dp,-1,sizeof(dp));
         
-        int ans=0;
-        for(int i=0;i<nums.size();i++)
-            ans=max(ans,findans(nums,i));
         return ans;
+        
     }
 };
