@@ -1,40 +1,41 @@
 class Solution {
 public:
-    vector<int> findOrder(int n, vector<vector<int>>& v) {
+     bool check(vector<vector<int>>&v,int node,vector<int>&vis,vector<int>&dvis,vector<int>&ans){
         
-        vector<int >arr[n];
-        vector<int>in(n,0);
-        for(auto i:v){
-            arr[i[0]].push_back(i[1]);
-            in[i[1]]++;
+        vis[node]=1;
+        dvis[node]=1;
+        for(auto i:v[node])
+        {
+                if(vis[i]==0)
+                {
+                    if(check(v,i,vis,dvis,ans)==true){ 
+                            return true;
+                    }
+                } else if(dvis[i]==1)
+                    return true;
         }
-        vector<int>ans;
+        dvis[node]=0;
+         ans.push_back(node);
+        return false;
+    }
+    vector<int> findOrder(int n, vector<vector<int>>& p) {
+        vector<vector<int>>v(n);
+        for(auto i:p)
+            v[i[0]].push_back(i[1]);
         
-        queue<int>q;
+        vector<int>vis(n,0),dvis(n,0);
+        vector<int>ans;
         for(int i=0;i<n;i++)
         {
-            if(in[i]==0)
-                q.push(i);
-        }
-        while(q.size()>0)
-        {
-            int node=q.front();
-            q.pop();
-            ans.push_back(node);
-            for(auto i:arr[node])
+            if(vis[i]==0)
             {
-                in[i]--;
-                if(in[i]==0)
-                    q.push(i);
+                if(check(v,i,vis,dvis,ans)==true)
+                {
+                    vector<int>temp;
+                    return temp;
+                }
             }
         }
-        if(ans.size()<n)
-        {
-            vector<int>temp;
-            return temp;
-        }
-        reverse(ans.begin(),ans.end());
         return ans;
-        
     }
 };
