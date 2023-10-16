@@ -11,7 +11,7 @@
  */
 class Solution {
 public:
-    bool check(TreeNode * root,int low,int high,map<int,int>&m)
+    bool check(TreeNode * root,int low,int high,unordered_map<int,int>&m)
     {
         if(root==nullptr)
             return true;
@@ -27,9 +27,9 @@ public:
             return false;
     }
     TreeNode* canMerge(vector<TreeNode*>& trees) {
-        map<int,TreeNode*>child;
-        map<int,TreeNode*>par;
-        map<int,int>m;
+        unordered_map<int,TreeNode*>child;
+        unordered_map<int,TreeNode*>par;
+        unordered_map<int,int>m;
         int flag=1;
         for(auto i:trees){
             if(par[i->val])
