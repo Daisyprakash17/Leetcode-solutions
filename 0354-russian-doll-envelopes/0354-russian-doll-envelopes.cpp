@@ -1,34 +1,39 @@
 class Solution {
 public:
-    static bool cmp(vector<int>&a,vector<int>&b)
+     static bool cmp(vector<int>&a,vector<int>&b)
     {
         if(a[0]==b[0])
             return a[1]>b[1];
         return a[0]<b[0];
     }
-        int maxEnvelopes(vector<vector<int>>& envelopes) {
+    int maxEnvelopes(vector<vector<int>>& v) {
+        // this problem is the variation of longest increasing sequence
+        // lis which is solved using binary search
         
-  sort(envelopes.begin(), envelopes.end(), cmp);
-        vector<int> dp;
-       vector<int>temp;
+        sort(v.begin(),v.end(),cmp);
+        vector<int>temp;
+        for(auto i:v)
+            temp.push_back(i[1]);
+        vector<int>ans;
+        
+        for(auto i:temp){
+            if(ans.size()==0)
+            {
+                ans.push_back(i);
+                continue;
+            }
+            int h=i;
+            int ind=lower_bound(ans.begin(),ans.end(),h)-ans.begin();
             
-            // after sorting we just have to find the lis using the 
-            // the binary which is going to run in n logn time complexicity
-            
-       for(auto i:envelopes)
-           temp.push_back(i[1]);
-            
-            
-        for (auto& env : temp) {
-            int height = env;
-            int left = lower_bound(dp.begin(), dp.end(), height) - dp.begin();
-            
-            if (left == dp.size()) dp.push_back(height);
-            dp[left] = height;
-            
-           
+            if(ind==ans.size())
+            {// this means the current element is the largest in the ans 
+                //vector
+                ans.push_back(i);
+            }else{
+                // else we will replace the value if the index
+                ans[ind]=i;
+            }
         }
-        return dp.size();
+        return ans.size();
     }
-	
 };
