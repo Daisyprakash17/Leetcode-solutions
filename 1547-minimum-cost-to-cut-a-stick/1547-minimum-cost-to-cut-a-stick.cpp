@@ -1,31 +1,24 @@
 class Solution {
 public:
-    int dp[103][103];
-    
-    int findans(vector<int>&v,int i,int j)
-    {
-        // this is if there is no cut remains
-        if(i+1>=j)
+    int dp[105][105];
+    int findans(vector<int>&v,int l,int r){
+        if(l+1==r)
             return 0;
+        if(dp[l][r]!=-1)
+            return dp[l][r];
         
-        if(dp[i][j]!=-1)
-            return dp[i][j];
-        
-        int val=INT_MAX;
-        
-        for(int k=i+1;k<j;k++)
-        {
-            val=min(val,v[j]-v[i]+findans(v,i,k)+findans(v,k,j));
+        int ans=INT_MAX;
+        for(int k=l+1;k<r;k++){
+            ans=min(ans,findans(v,l,k)+findans(v,k,r));
         }
-        return dp[i][j]=val;
+        return dp[l][r]=ans+v[r]-v[l];
         
     }
-    int minCost(int n, vector<int>& cuts) {
+    int minCost(int n, vector<int>& v) {
+        v.push_back(0);
+        v.push_back(n);
+        sort(v.begin(),v.end());
         memset(dp,-1,sizeof(dp));
-        cuts.push_back(0);
-        cuts.push_back(n);
-        sort(cuts.begin(),cuts.end());
-        
-        return findans(cuts,0,cuts.size()-1);
+        return findans(v,0,v.size()-1);
     }
 };
