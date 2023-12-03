@@ -9,56 +9,52 @@ using namespace std;
 
 class Solution {
   public:
-  void findarti(vector<int>v[],vector<int>&vis,int node,vector<int>&in,vector<int>&low,int& time,int par,map<int,int>&m)
-{
-    vis[node]=1;
-    in[node]=low[node]=time++;
-    int count=0;
-    for(auto i:v[node])
-    {
-        if(par==i )
+    void findans(vector<int>arr[],int node,int par,vector<int>&vis,vector<int>&low,vector<int>&disc,int timer,vector<int>&ans){
+        
+        timer++;
+        vis[node]=1;
+        low[node]=timer;
+        disc[node]=timer;
+        int count=0;
+        for(auto i:arr[node]){
+            if(i==par)
             continue;
-        if(vis[i]==0)
-        {
-                    findarti(v,vis,i,in,low,time,node,m);
-                    low[node]=min(low[node],low[i]);
-                    if(low[i]>=in[node] && par!=-1)
-                    {
-                        m[node]++;
-                    }
-                    count++;
-        }
-        else
-            low[node]=min(in[i],low[node]);
-    }
-    if(count>1 && par==-1)
-        m[node]++;
-}
-    vector<int> articulationPoints(int n, vector<int>adj[]) {
-         vector<int>in(n,-1);
-        vector<int>low(n,-1);
-        vector<int>vis(n,0);
-        map<int,int>m;
-        int time=1;
-        for(int i=0;i<n;i++)
-        {
-            if(vis[i]==0)
-            {
-                findarti(adj,vis,i,in,low,time,-1,m);
+            if(vis[i]==0){
+                findans(arr,i,node,vis,low,disc,timer,ans);
+                low[node]=min(low[node],low[i]);
+                if(low[i]>=disc[node] && par!=-1){
+                    // this is the articulation point
+                    ans.push_back(node);
+                }
+                count++;
+            }else{
+                low[node]=min(low[node],disc[i]);
             }
-        
+            
         }
-        vector<int>ans;
-        for(auto i:m)
-            ans.push_back(i.first);
-
-       
+        if(par==-1 && count>1)
+            ans.push_back(node);
+    }
+    vector<int> articulationPoints(int V, vector<int>arr[]) {
+        // Code here
         
+        
+        vector<int>vis(V,0);
+        vector<int>low(V,0);
+        vector<int>disc(V,0);
+        vector<int>ans;
+        int timer=1;
+        for(int i=0;i<V;i++){
+            if(vis[i]==0){
+                findans(arr,i,-1,vis,low,disc,timer,ans);
+            }
+        }
         if(ans.size()==0)
         ans.push_back(-1);
         sort(ans.begin(),ans.end());
+        auto it = unique(ans.begin(), ans.end());
+        ans.resize(distance(ans.begin(), it));
         return ans;
-
     }
 };
 
