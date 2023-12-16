@@ -1,8 +1,7 @@
 class Solution {
 public:
-    vector<vector<string>>ans;
-    bool check(string &s,int i,int j){
-        
+    vector<vector<vector<string>>>ans;
+    bool check(string& s,int i,int j){
         while(i<=j)
         {
             if(s[i]!=s[j])
@@ -12,24 +11,35 @@ public:
         }
         return true;
     }
-    void findans(string & s,int i,vector<string> &temp){
+    void findans(string s,int i){
+        
         if(i>=s.size())
-        {
-            ans.push_back(temp);
             return ;
-        }
+        if(ans[i].size()>0)
+            return ;
+        
         for(int j=i;j<s.size();j++){
             if(check(s,i,j)){
+                vector<string>temp;
                 temp.push_back(s.substr(i,j-i+1));
-                findans(s,j+1,temp);
-                temp.pop_back();
+                if(j+1==s.size()){
+                    ans[i].push_back(temp);
+                }else{
+                findans(s,j+1);
+                    for(auto k:ans[j+1]){
+                        vector<string>t=temp;
+                        for(auto a:k){
+                            t.push_back(a);
+                        }
+                        ans[i].push_back(t);
+                    }
+                }
             }
         }
-        
     }
     vector<vector<string>> partition(string s) {
-        vector<string>temp;
-         findans(s,0,temp);
-        return ans;
+        ans.resize(16);
+        findans(s,0);
+        return ans[0];
     }
 };
