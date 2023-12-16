@@ -1,31 +1,30 @@
 class Solution {
 public:
-        int dp[100005][2][3];
-        int mod=1e9+7;
-        int findans(int i,int n,int a,int l){
-            if(i>=n)
-                return 1;
-            if(dp[i][a][l]!=-1)
-                return dp[i][a][l];
-            
-            int ans=0;
-            // if marking the student as prennt
-            ans=(ans+findans(i+1,n,a,0))%mod;
-            
-            // if marking the student as late 
-            // that only possible if not late for 2 consecutive days
-            if(l<2)
-                ans=(ans+findans(i+1,n,a,l+1))%mod;
-            
-            // if want to make the currnet studetn as abent 
-            // then this is only possible if the student have not taken a leave already
-            
-            if(a==1)
-                ans=(ans+findans(i+1,n,0,0))%mod;
-            return dp[i][a][l]=ans;
+    int dp[100005][2][3];
+    int mod=1e9+7;
+    int findans(int n ,int i,int a,int l){
+        
+        if(i>=n)
+            return 1;
+        if(dp[i][a][l]!=-1)
+            return dp[i][a][l];
+        // this is where student was present
+        int ans=findans(n,i+1,a,2);
+        
+        // if student was absent
+        if(a==1){
+            ans=(ans+findans(n,i+1,0,2))%mod;
         }
+        
+        // if student was late
+        if(l>0){
+            ans=(ans+findans(n,i+1,a,l-1))%mod;
+        }
+        return dp[i][a][l]=ans;
+        
+    }
     int checkRecord(int n) {
         memset(dp,-1,sizeof(dp));
-        return findans(0,n,1,0);
+        return findans(n,0,1,2);
     }
 };
