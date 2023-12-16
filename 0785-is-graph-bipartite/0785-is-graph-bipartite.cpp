@@ -1,35 +1,32 @@
 class Solution {
 public:
-    bool isBipartite(vector<vector<int>>& g) {
-        int n=g.size(); 
-        vector<int>vis(n,0);
+    int findans(vector<vector<int>>&arr,int node,vector<int>&col,int c){
+        col[node]=c;
+        
+        for(auto i:arr[node]){
+            if(col[i]==-1){
+               if(findans(arr,i,col,(c+1)%2)==false)
+                    return false;
+            }else if(col[i]==col[node])
+                return false;
+        }
+        return true;
+    }
+    bool isBipartite(vector<vector<int>>& v) {
+        int n=v.size();
+        vector<vector<int>>arr(n);
+        for(int i=0;i<n;i++){
+                for(auto j:v[i])
+                    arr[i].push_back(j);
+        }
+        
         vector<int>col(n,-1);
-        for(int i=0;i<n;i++)
-        {
-            if(vis[i]==0)
-            {
-                queue<int>q;
-                q.push(i);
-                col[i]=0;
-                while(q.size()>0)
-                {
-                    int node=q.front();
-                    int c=col[node];
-                    q.pop();
-                    for(auto j:g[node])
-                    {
-                        if(vis[j]==0)
-                        {
-                            vis[j]=1;
-                            q.push(j);
-                            col[j]=(c+1)%2;
-                        } else if(col[j]==c)
-                            return false;
-                        
-                    }
-                }
+        for(int i=0;i<n;i++){
+            if(col[i]==-1){
+                if(findans(arr,i,col,0)==false)
+                    return false;
             }
         }
-        return true; 
+        return true;
     }
 };
