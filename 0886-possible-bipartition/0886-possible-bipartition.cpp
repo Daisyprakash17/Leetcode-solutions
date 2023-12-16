@@ -1,23 +1,19 @@
 class Solution {
 public:
-    int findans(vector<vector<int>>&arr ,int node,vector<int>&vis,int col)
-    {
-
-                vis[node]=col;
+    int findans(vector<vector<int>>&arr,int node,vector<int>&col,int c){
+        col[node]=c;
+        
         for(auto i:arr[node]){
-            
-        
-            if(vis[i]==-1)
-            {
-                if(findans(arr,i,vis,(col+1)%2)==false)
+            if(col[i]==-1){
+               if(findans(arr,i,col,(c+1)%2)==false)
                     return false;
-            }else if(vis[i]==col)
+            }else if(col[i]==col[node])
                 return false;
-            }
-        
-    return true;    
+        }
+        return true;
     }
     bool possibleBipartition(int n, vector<vector<int>>& v) {
+        
         vector<vector<int>>arr(n+1);
         for(auto i:v)
         {
@@ -25,12 +21,12 @@ public:
             arr[i[1]].push_back(i[0]);
         }
         
-        vector<int>vis(n+1,-1);
-        for(int i=1;i<=n;i++)
-        {
-                if(vis[i]==-1)
-                    if(findans(arr,i,vis,0)==false)
-                        return false;
+        vector<int>col(n+1,-1);
+        for(int i=1;i<=n;i++){
+            if(col[i]==-1){
+                if(findans(arr,i,col,0)==false)
+                    return false;
+            }
         }
         return true;
     }
