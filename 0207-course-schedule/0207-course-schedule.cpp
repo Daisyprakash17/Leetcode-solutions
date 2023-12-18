@@ -1,34 +1,32 @@
 class Solution {
 public:
-    
-    bool canFinish(int n, vector<vector<int>>& p) {
-       
-        vector<vector<int>>v(n);
-        vector<int>in(n,0);
-        for(auto i:p)
-        {
-            v[i[0]].push_back(i[1]);
-            in[i[1]]++;
-        }
-        int count=0;
-        queue<int>q;
-        for(int i=0;i<n;i++)
-        {
-            if(in[i]==0)
-                q.push(i);
-        }
-        while(q.size()>0)
-        {
-            int node=q.front();
-            q.pop();
-            count++;
-            for(auto i:v[node])
+    bool check(vector<vector<int>>&arr,int node,vector<int>&vis,vector<int>&dvis){
+        dvis[node]=vis[node]=1;
+        for(auto i:arr[node]){
+            if(vis[i]==0)
             {
-                in[i]--;
-                if(in[i]==0)
-                    q.push(i);
+                if(check(arr,i,vis,dvis)==true)
+                    return true;
+            }else if(dvis[i]==1)
+                return true;
+        }
+        dvis[node]=0;
+        return false;
+    }
+    bool canFinish(int n, vector<vector<int>>& edges) {
+        vector<vector<int>>arr(n);
+        for(auto i:edges)
+        {
+            arr[i[1]].push_back(i[0]);
+        }
+        vector<int>vis(n,0),dvis(n,0);
+        for(int i=0;i<n;i++){
+            if(vis[i]==0)
+            {
+                if(check(arr,i,vis,dvis)==true)
+                    return false;
             }
         }
-        return count==n;
+        return true;
     }
 };
