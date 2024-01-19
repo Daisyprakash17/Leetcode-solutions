@@ -1,32 +1,29 @@
 class Solution {
 public:
     int dp[301][11];
-    int findans(vector<int>&v,int i,int n,int d)
-    {
-        if(i==n)
-            return 0;
+    int findans(vector<int>&v,int i,int d){
+        if(i>=v.size())
+        {
+            return d==0?0:1e7;
+        }
         if(d==0)
-            return -1;
+            return i>=v.size()?0:1e7;
+        
         if(dp[i][d]!=-1)
             return dp[i][d];
-        
-        int ans=INT_MAX;
-        int cur=-1;
-        
-        for(int j=i;j<=n-d;j++)
-        {
-            cur=max(cur,v[j]);  
-            int curval=findans(v,j+1,n,d-1);
-            if(curval!=-1)
-            ans=min(ans,curval+cur);
+        int temp=1e7;
+        int cur=v[i];
+        for(int j=i;j<v.size();j++){
+            cur=max(cur,v[j]);
+            temp=min(temp,cur+findans(v,j+1,d-1));
         }
-        return dp[i][d]=ans;
+        return dp[i][d]=temp;
     }
-    int minDifficulty(vector<int>& v, int d) {
-        int n=v.size();
-        if(n<d)
-            return -1;
+    int minDifficulty(vector<int>& jobDifficulty, int d) {
         memset(dp,-1,sizeof(dp));
-        return findans(v,0,n,d);
+     int ans=findans(jobDifficulty,0,d);
+            if(ans==1e7)
+                return -1;
+        return ans;
     }
 };
