@@ -1,37 +1,38 @@
 class Solution {
 public:
-    vector<vector<int>>arr ;
-    vector<bool >apple;
-    int findans( int node,vector<int>&vis)
-    {
-            
-        int ans=0;
+    int findans(vector<vector<int>>&arr,int node,map<int,int>&check,vector<int>&vis){
+        
         vis[node]=1;
-         for(auto i:arr[node])
-        {
-             if(vis[i]==1)
-                 continue;
-            int val=findans( i,vis);
-            if(val>0)
-                ans+=val;
+        int temp=0;
+        for(auto i:arr[node]){
+            if(vis[i]==0){
+                temp+=findans(arr,i,check,vis);
+            }
         }
-         if(ans>0)
-            return ans+2;
-        if(apple[node]==true)
-            return 2;
-        else
-            return 0; 
+        if(check[node] || temp>0)
+            temp+=2;
+        return temp;
     }
-    int minTime(int n, vector<vector<int>>& edges, vector<bool>& a) {
-        vector<vector<int>>arrr(n);
-        vector<int>vis(n+1,0);
+    int minTime(int n, vector<vector<int>>& edges, vector<bool>& hasApple) {
+        vector<vector<int>>arr(n);
         for(auto i:edges)
         {
-            arrr[i[0]].push_back(i[1]);
-            arrr[i[1]].push_back(i[0]);
+            arr[i[0]].push_back(i[1]);
+            arr[i[1]].push_back(i[0]);
         }
-        arr=arrr;
-        apple=a;
-        return max(findans( 0,vis)-2,0);
+        vector<int>vis(n,0);
+        
+        map<int,int>check;
+        for(int i=0;i<n;i++){
+            if(hasApple[i])
+                check[i]=true;
+        }
+        
+        
+        int res=findans(arr,0,check,vis);
+        if(res!=0)
+            res-=2;
+        return res;
+            
     }
 };
