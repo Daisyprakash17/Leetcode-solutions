@@ -21,9 +21,6 @@ public:
         fillval(root->right,m,level+1);
     }
     int getans(vector<int>&v){
-        for(auto i:v)
-            cout<<i<<" ";
-        cout<<endl;
         map<int,int>m;
         for(int i=0;i<v.size();i++){
             m[v[i]]=i;
@@ -44,7 +41,6 @@ public:
             m[t]=i.second;
             j++;
         }
-        cout<<count<<endl;
         return count;
     }
     int minimumOperations(TreeNode* root) {
