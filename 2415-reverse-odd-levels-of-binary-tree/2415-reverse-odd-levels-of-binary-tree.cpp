@@ -13,35 +13,33 @@ class Solution {
 public:
     TreeNode* reverseOddLevels(TreeNode* root) {
         
-        vector<TreeNode * >cur;
+        vector<TreeNode*>cur;
+        vector<TreeNode*>prev;
         cur.push_back(root);
-        int level=1;
+        int flag=0;
         while(cur.size()>0){
-            vector<TreeNode * >temp;
-            vector<int>vals;
+            
             for(auto i:cur)
             {
-                if(i->left){
-                    temp.push_back(i->left);
-                    vals.push_back(i->left->val);
-                }
-                if(i->right){
-                    temp.push_back(i->right);
-                    vals.push_back(i->right->val);
+                if(i->left)
+                prev.push_back(i->left);
+                if(i->right)
+                prev.push_back(i->right);
+            }
+            if(flag==0 ){
+                
+                int i=0;
+                int j=prev.size()-1;
+                while(i<=j){
+                    swap(prev[i]->val,prev[j]->val);
+                    i++;
+                    j--;
                 }
             }
-            if(level==1 && temp.size()>0){
-                int sz=vals.size();
-                TreeNode * tt;
-                for(int i=0;i<cur.size();i++){
-                    tt=cur[i];
-                    tt->left->val=vals[sz-1];
-                    tt->right->val=vals[sz-2];
-                    sz-=2;
-                }
-            }
-            cur=temp;
-            level=(level+1)%2;
+            
+            flag=(flag+1)%2;
+            cur=prev;
+            prev.clear();
         }
         return root;
     }
