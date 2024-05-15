@@ -1,30 +1,25 @@
 class Solution {
 public:
-    int dp[1000][1000];
-    int findans(string &a,string &b,int i,int j)
-    {
-        if(i==a.size() || j==b.size())
+    int dp[1001][1001];
+    int findans(string &s,int i,int j){
+        if(i>j)
             return 0;
+        if(i==j)
+            return 1;
         if(dp[i][j]!=-1)
             return dp[i][j];
         
-        int val=0;
-        if(a[i]==b[j])
-        {
-            val=max(val,1+findans(a,b,i+1,j+1));
+        int ans=0;
+        if(s[i]==s[j]){
+            ans=max(ans,2+findans(s,i+1,j-1));
         }
-        else
-        {
-        val=max(val,findans(a,b,i+1,j));
-        val=max(val,findans(a,b,i,j+1));
-        }
-        return dp[i][j]=val;
+        // else if we want to explore all the other ways
+        ans=max(ans,findans(s,i,j-1));
+        ans=max(ans,findans(s,i+1,j));
+        return dp[i][j]=ans;
     }
-    
     int longestPalindromeSubseq(string s) {
         memset(dp,-1,sizeof(dp));
-        string t=s;
-        reverse(t.begin(),t.end());
-        return findans(s,t,0,0);
+        return findans(s,0,s.size()-1);
     }
 };
