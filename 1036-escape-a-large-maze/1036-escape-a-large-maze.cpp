@@ -11,7 +11,7 @@ public:
         queue<pair<int,int>>q;
         q.push({point[0],point[1]});
         
-        while(q.size() && count<165000){
+        while(q.size() && count<160000){
             
             pair<int,int>p=q.front();
             q.pop();
