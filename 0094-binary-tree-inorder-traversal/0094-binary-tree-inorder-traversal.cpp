@@ -11,30 +11,28 @@
  */
 class Solution {
 public:
+    
     vector<int> inorderTraversal(TreeNode* root) {
-        
-        
         vector<int>ans;
-        TreeNode * cur=root;
-        while(cur!=nullptr){
+        
+        TreeNode * temp=root;
+        while(temp!=nullptr){
             
-            if(cur->left==nullptr){
-                // this means either left no exist of left if already traversed
-                ans.push_back(cur->val);
+            if(temp->left==nullptr){
+                ans.push_back(temp->val);
+                temp=temp->right;
+                continue;
+            }
+            
+            TreeNode *cur=temp->left;
+            
+            while(cur->right!=nullptr){
                 cur=cur->right;
             }
-            else{
-                TreeNode * temp=cur->left;
-                // now here will find the right most node of left
-                while(temp->right!=nullptr){
-                    temp=temp->right;
-                }
-                
-                temp->right=cur;
-                TreeNode * t=cur->left;
-                cur->left=nullptr;
-                cur=t;
-            }
+            cur->right=temp;
+            TreeNode * tt=temp->left;
+            temp->left=nullptr;
+            temp=tt;
         }
         return ans;
     }
