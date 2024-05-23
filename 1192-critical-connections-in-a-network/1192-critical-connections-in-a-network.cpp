@@ -1,50 +1,44 @@
 class Solution {
 public:
-    vector<int>arr[100000];
-        int t=0;
-    void findans(int node,vector<int>&disc,vector<int>&low,vector<int>&p,vector<vector<int>>&ans)
-    {
-        t++;
-        disc[node]=t;
-        low[node]=t;
+    void findans(vector<vector<int>>&arr,int node,vector<int>&vis,vector<int>&desc,vector<int>&low,int timer,vector<vector<int>>&ans,int par){
         
-        for(auto i:arr[node])
-        {
-            if(disc[i]==-1)
-            {
-                // if this node is not visited yet
-                p[i]=node;
-                findans(i,disc,low,p,ans);
+        timer++;
+        low[node]=desc[node]=vis[node]=timer;
+        
+        for(auto i:arr[node]){
+            if(i==par)
+                continue;
+            if(vis[i]==0){
+                // then we have to make the recursive call to find the bridges
+                findans(arr,i,vis,desc,low,timer,ans,node);
                 low[node]=min(low[node],low[i]);
-                
-                if(low[i]>disc[node])
-                {
-                    // if child nodes low values is bigger the current 
-                    // nodes discovery time then this is the bridge
-                    ans.push_back({node,i}); 
-                }
+                if(desc[node]<low[i])
+                    ans.push_back({node,i});
             }
-            else if(i!=p[node])
-            {
-                // if node is visited and node is not the 
-                // parent of the current node 
-                // then we have to update the low value of the current node
-                low[node]=min(low[node],disc[i]);
+            else{
+                low[node]=min(low[node],desc[i]);
             }
         }
     }
-    vector<vector<int>> criticalConnections(int n, vector<vector<int>>& v) {
+    vector<vector<int>> criticalConnections(int n, vector<vector<int>>& connections) {
         
-        for(auto i:v)
+        vector<vector<int>>arr(n);
+        for(auto i:connections)
         {
             arr[i[0]].push_back(i[1]);
             arr[i[1]].push_back(i[0]);
         }
-        vector<int>p(n,-1),disc(n,-1),low(n,-1);
+        vector<int>vis(n,0);
+        vector<int>disc(n,INT_MAX);
+        vector<int>low(n,INT_MAX);
+        int timer=0;
         vector<vector<int>>ans;
-        for(int i=0;i<n;i++)
-            if(disc[i]==-1)
-        findans(i,disc,low,p,ans);
+        
+        for(int i=0;i<n;i++){
+            if(vis[i]==0){
+                findans(arr,i,vis,disc,low,timer,ans,-1);
+            }
+        }
         return ans;
     }
 };
