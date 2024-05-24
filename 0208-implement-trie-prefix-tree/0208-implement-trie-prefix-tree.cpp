@@ -1,15 +1,19 @@
-struct Node {
-   Node *links[26];
-    bool flag=false;
-    bool containNode(char ch)
-    {
-        return links[ch-'a']!=NULL;
+class Node{
+public:
+    bool flag;
+    vector<Node *>nextnode;
+    void setnode(char ch,Node *newnode){
+        nextnode[ch-'a']=newnode;
     }
-    void putNode(char ch,Node * node){
-        links[ch-'a']=node;
+    bool hasnode(char ch){
+        return nextnode[ch-'a']!=nullptr;
     }
-    Node * getNode(char ch){
-        return links[ch-'a'];
+    Node* getnode(char ch){
+        return nextnode[ch-'a'];
+    }
+    Node(){
+        flag=false;
+        nextnode.resize(26,nullptr);
     }
 };
 class Trie {
@@ -20,35 +24,38 @@ public:
     }
     
     void insert(string word) {
-       Node * node=root;
-        for(auto i:word)
-        {
-            if(!node->containNode(i))
-                node->putNode(i,new Node());
-            node=node->getNode(i);
-                
+        Node * temp=root;
+        for(auto i:word){
+            if(temp->hasnode(i)){
+                temp=temp->getnode(i);
+            }
+            else{
+                Node * newnode=new Node();
+                temp->setnode(i,newnode);
+                temp=temp->getnode(i);
+            }
         }
-        node->flag=true;
+        temp->flag=true; // this means that this string is completed this this point
     }
     
     bool search(string word) {
-        Node * node=root;
-        for(auto i:word)
-        {
-            if(node->containNode(i)==false)
+        
+        Node * temp=root;
+        
+        for(auto i:word){
+            if(temp->hasnode(i)==false)
                 return false;
-            node=node->getNode(i);
+            temp=temp->getnode(i);
         }
-        return node->flag;
+        return temp->flag;
     }
     
     bool startsWith(string prefix) {
-        Node * node=root;
-        for(auto i:prefix)
-        {
-            if(node->containNode(i)==false)
+        Node * temp=root;
+        for(auto i:prefix){
+            if(temp->hasnode(i)==false)
                 return false;
-            node=node->getNode(i);
+            temp=temp->getnode(i);
         }
         return true;
     }
