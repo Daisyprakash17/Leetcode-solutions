@@ -24,20 +24,15 @@ public:
         for(auto i:nums)
             sum+=i;
        int ans=0;
-        cout<<sum<<endl;
         for(int i=2;i<=sum;i++){
             if(sum%i==0){
-                cout<<"calling for "<<i<<endl;
                 vector<int>vis(n,0);
                 bool flag=true;
-                cout<<"about to call for "<<i<<endl;
                 getans(arr,0,nums,flag,sum/i,vis);
-                cout<<flag<<endl;
                 if(flag)
                     ans=max(ans,i-1);
             }
         }
-        cout<<"the answer is "<<ans<<endl;
         return ans;
     }
     int componentValue(vector<int>& nums, vector<vector<int>>& edges) {
