@@ -15,7 +15,7 @@ public:
         else
             return second;
     }
-    long long  findans(int r,int i,vector<int>ava){
+    long long  findans(int r,int i,vector<int>&ava){
         
         if(r==0)
             return 0;
