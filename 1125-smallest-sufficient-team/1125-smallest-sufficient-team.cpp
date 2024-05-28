@@ -67,8 +67,6 @@ public:
         }
         // so now we have give the unique number of each of the people
     
-        for(auto i:v)
-            cout<<i<<endl;
         
         long long  ans=findans(r,0,v);
         vector<int >final_ans;
