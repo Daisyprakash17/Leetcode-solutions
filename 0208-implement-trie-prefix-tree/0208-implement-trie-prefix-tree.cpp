@@ -1,61 +1,56 @@
 class Node{
-public:
+    public:
     bool flag;
-    vector<Node *>nextnode;
-    void setnode(char ch,Node *newnode){
-        nextnode[ch-'a']=newnode;
+    vector<Node *>next;
+    void setval(char ch,Node* node){
+        next[ch-'a']=node;
     }
-    bool hasnode(char ch){
-        return nextnode[ch-'a']!=nullptr;
+    Node* getval(char ch){
+        return next[ch-'a'];
     }
-    Node* getnode(char ch){
-        return nextnode[ch-'a'];
+    bool checkval(char ch){
+        return next[ch-'a']!=nullptr;
     }
     Node(){
         flag=false;
-        nextnode.resize(26,nullptr);
+        next.resize(26,nullptr);
     }
 };
 class Trie {
 public:
-    Node * root;
+    Node* root;
     Trie() {
         root=new Node();
     }
     
     void insert(string word) {
         Node * temp=root;
+        
         for(auto i:word){
-            if(temp->hasnode(i)){
-                temp=temp->getnode(i);
+            if(temp->checkval(i)==false){
+             temp->setval(i,new Node());   
             }
-            else{
-                Node * newnode=new Node();
-                temp->setnode(i,newnode);
-                temp=temp->getnode(i);
-            }
+            temp=temp->getval(i);
         }
-        temp->flag=true; // this means that this string is completed this this point
+        temp->flag=true;
     }
     
     bool search(string word) {
-        
         Node * temp=root;
-        
-        for(auto i:word){
-            if(temp->hasnode(i)==false)
+        for(auto i :word){
+            if(temp->checkval(i)==false)
                 return false;
-            temp=temp->getnode(i);
+            temp=temp->getval(i);
         }
         return temp->flag;
     }
     
     bool startsWith(string prefix) {
         Node * temp=root;
-        for(auto i:prefix){
-            if(temp->hasnode(i)==false)
+        for(auto i :prefix){
+            if(temp->checkval(i)==false)
                 return false;
-            temp=temp->getnode(i);
+            temp=temp->getval(i);
         }
         return true;
     }
