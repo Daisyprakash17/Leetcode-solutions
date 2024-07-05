@@ -22,11 +22,11 @@ public:
             return ;
         }
         int mid=(l+r)/2;
-        if(index>=l &&index<=mid){
+        if(index<=mid){
             // so this value is in left parts so
             updatevalue(2*node,index,val,l,mid);
         }
-        else if(index>=mid+1 &&index<=r)
+        else if(index>=mid+1)
             updatevalue(2*node+1,index,val,mid+1,r);
         nodes[node]=nodes[2*node]+nodes[2*node+1];
     }
