@@ -1,6 +1,6 @@
 class Solution {
 public:
-    map<int,int>maxSum;
+    unordered_map<int,int>maxSum;
     int fillValues(int node,vector<vector<int>>&arr,vector<int>&prices,int par){
         
         int maxsum=0;
@@ -51,7 +51,6 @@ public:
         }
         fillValues(0,arr,price,-1);
         int maxans=maxSum[0]-price[0];
-        cout<<"the max ans is "<<maxans<<endl;
         findans(0,arr,price,0,maxans,-1);
         return maxans;
             
