@@ -1,60 +1,59 @@
 class Solution {
 public:
-    long long ans = 0;
-    vector<int> graph[100007];
-    vector<long long> best;
-    long long dfs_sz(int u,int p,vector<int> &pr){
-        long long mx = 0;
-        for(auto v:graph[u]){
-            if(v ==p)continue;
-            mx = max(mx,dfs_sz(v,u,pr));
+    map<int,int>maxSum;
+    int fillValues(int node,vector<vector<int>>&arr,vector<int>&prices,int par){
+        
+        int maxsum=0;
+        for(auto i:arr[node])
+        {
+            if(i!=par)
+                maxsum=max(maxsum,fillValues(i,arr,prices,node));
         }
-        best[u] = mx;
-        return best[u]+pr[u];
+        maxSum[node]=prices[node]+maxsum;
+        return maxSum[node];
     }
-    
-    void dfs(int u,int p  ,vector<int> &pr){
-        vector<pair<long long,int>> A;
-        for(auto v:graph[u]){
-            A.push_back({best[v]+pr[v],v});
+    void findans(int node,vector<vector<int>>&arr,vector<int>&prices,int sum,int& maxans,int par){
+        
+        
+        maxans=max(maxans,max(sum,maxSum[node]-prices[node]));
+        
+        int firstMax=-1;
+        int secondMax=-1;
+        for(auto i:arr[node]){
+            if(i!=par){
+                if(maxSum[i]>=firstMax){
+                    secondMax=firstMax;
+                    firstMax=maxSum[i];
+                }else if(maxSum[i]>=secondMax){
+                    secondMax=maxSum[i];
+                }
+            }
         }
-        
-        sort(A.rbegin(),A.rend());
-        if(A.size())
-            ans = max(ans,A[0].first);
-        
-        for(auto v:graph[u]){
-            if(v == p)continue;
-            long long last = best[u];
-            long long nwBest = 0;
-            if(v ==A[0].second && A.size()>1){
-                nwBest += A[1].first;
+        for(auto i:arr[node]){
+            if(i!=par){
+                int tempsum=sum;
+                if(firstMax==maxSum[i])
+                    tempsum=max(tempsum,secondMax);
+                else
+                    tempsum=max(tempsum,firstMax);
+                findans(i,arr,prices,tempsum+prices[node],maxans,node);
             }
-            else if(v != A[0].second){
-                nwBest += A[0].first;
-            }
-            if(p !=-1){
-                nwBest = max(nwBest,best[p]);
-            }
-            
-            best[u] = nwBest;
-            dfs(v,u,pr);
-            
-            best[u] = last;
+                
         }
-        
     }
-    
     long long maxOutput(int n, vector<vector<int>>& edges, vector<int>& price) {
-        best.resize(n);
-        for(int i = 0;i<n-1;i++){
-            int u = edges[i][0];
-            int v = edges[i][1];
-            graph[u].push_back(v);
-            graph[v].push_back(u);
+        
+        vector<vector<int>>arr(n);
+        for(auto i:edges)
+        {
+            arr[i[0]].push_back(i[1]);
+            arr[i[1]].push_back(i[0]);
         }
-        dfs_sz(0,-1,price);
-        dfs(0,-1,price);
-        return ans;
+        fillValues(0,arr,price,-1);
+        int maxans=maxSum[0]-price[0];
+        cout<<"the max ans is "<<maxans<<endl;
+        findans(0,arr,price,0,maxans,-1);
+        return maxans;
+            
     }
 };
