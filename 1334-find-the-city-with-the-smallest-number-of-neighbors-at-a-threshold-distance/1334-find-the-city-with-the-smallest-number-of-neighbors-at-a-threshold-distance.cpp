@@ -1,9 +1,11 @@
 class Solution {
 public:
     
-    int findmincities(int node,vector<vector<pair<int,int>>>&arr,int d,int n){
+    int findmincities(int node,vector<vector<pair<int,int>>>&arr,int d,int n,vector<vector<int>>&edges){
         
         vector<int>dis(n,INT_MAX);
+        
+        // below is using dijkstra
         priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>>pq;
         pq.push({0,node});
         dis[node]=0;
@@ -26,6 +28,9 @@ public:
             }
         }
         
+        
+       
+        
         int count=0;
         for(auto i:dis){
             if(i<=d)
@@ -46,7 +51,7 @@ public:
         int minicities=INT_MAX;
         int ans;
         for(int i=0;i<n;i++){
-            int res=findmincities(i,arr,distanceThreshold,n);
+            int res=findmincities(i,arr,distanceThreshold,n,edges);
             if(res<minicities){
                 minicities=res;
                 ans=i;
