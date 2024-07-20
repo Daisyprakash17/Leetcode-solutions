@@ -1,63 +1,44 @@
 class Solution {
 public:
-    void fillin(vector<int>&v,string &s)
-    {
-        if(s.size()==1)
-            return ;
-        v[0]=0;
-        int i=0;
-        int j=1;
+    int strStr(string s, string p) {
         
-        while(j<s.size())
-        {
-            if(s[i]==s[j]) {
-                v[j]=i+1;
-                i++; 
-                j++;
-            }
-             else
-             {
-                 if(i==0)
-                 {
-                     j++;
-                 }
-                 else
-                 {
-                     i=v[i-1];
-                 }
-             }
-            
-             
-        }
-        for(auto i:v)
-            cout<<i<<" ";
-        cout<<endl;
-    }
-    int findindex(vector<int>&in,string &s,string &t)
-    {
-        int i=0;
+        
+        vector<int>prefixTable(p.size());
+        
         int j=0;
-        while(i<s.size() && j<t.size())
-        {
-         if(s[i]==t[j])
-         {
-             i++;
-             j++;
-         }
-        else if(j==0)
-                i++;
-            else
-                j=in[j-1];   
-        }
-        if(j!=t.size()) 
-            return -1;
-        else
-             return i-t.size();
-    }
-    int strStr(string s, string t) {
-        vector<int>in(t.size(),0);
+        int i=1;
+        prefixTable[0]=0;
         
-           fillin(in,t);
-         return findindex(in,s,t);
+        while(i<p.size()){
+            if(p[i]==p[j]){
+                prefixTable[i]=j+1;
+                j++;
+                i++;
+            }else if(j>0){
+                j=prefixTable[j-1];
+            }else{
+                prefixTable[i]=0;
+                i++;
+            }
+        }
+        
+        i=0;
+        j=0;
+        while(j<p.size() && i<s.size()){
+            
+            if(s[i]==p[j]){
+                j++;
+                i++;
+            }else if(j>0){
+                j=prefixTable[j-1];
+            }else{
+                i++;
+            }
+        }
+        if(j==p.size()){
+            return i-j;
+        }
+        else
+            return -1;
     }
 };
